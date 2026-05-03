@@ -6,12 +6,12 @@ namespace Player
     public class PlayerModel
     {
         public Vector2 Position { get; set; }
-        public int Width = 32;
-        public int Height = 32;
+        public int Width = 96;
+        public int Height = 96;
         public Vector2 Velocity { get; set; }
-        public float Speed = 200f;
-        public float Gravity = 900f;
-        public float JumpForce = -500f;
+        public float Speed = 300f;
+        public float Gravity = 1100f;
+        public float JumpForce = -600f;
 
         public bool IsOnGround { get; set; } = false;
         public bool IsJumping { get; set; } = false;

@@ -55,7 +55,7 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        spriteBatch.Begin();
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
         playerView.Draw(spriteBatch, playerModel);
         spriteBatch.End();
 
