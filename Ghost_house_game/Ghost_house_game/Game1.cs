@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using Player;
+using Room;
 
 namespace Ghost_house_game;
 
@@ -12,6 +13,9 @@ public class Game1 : Game
     private PlayerModel playerModel;
     private PlayerView playerView;
     private PlayerController playerController;
+    private RoomModel roomModel;
+    private RoomView roomView;
+
 
     public Game1()
     {
@@ -38,6 +42,9 @@ public class Game1 : Game
         playerModel = new PlayerModel(new Vector2(100, 100));
         playerView = new PlayerView(spriteSheet);
         playerController = new PlayerController(playerModel);
+
+        roomModel = new RoomModel();
+        roomView = new RoomView();
     }
 
     protected override void Update(GameTime gameTime)
@@ -56,6 +63,7 @@ public class Game1 : Game
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
         spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        roomView.Draw(spriteBatch, roomModel);
         playerView.Draw(spriteBatch, playerModel);
         spriteBatch.End();
 

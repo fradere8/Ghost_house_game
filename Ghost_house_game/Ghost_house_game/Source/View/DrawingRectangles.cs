@@ -14,10 +14,10 @@ namespace DrawingExtensions
             var pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);
             pixel.SetData(new Color[] { Color.White });
 
-            spriteBatch.Draw(pixel, new Rectangle(rect.Left, rect.Top, rect.Width, depth), color);
-            spriteBatch.Draw(pixel, new Rectangle(rect.Left, rect.Bottom - depth, rect.Width, depth), color);
-            spriteBatch.Draw(pixel, new Rectangle(rect.Left, rect.Top, depth, rect.Height), color);
-            spriteBatch.Draw(pixel, new Rectangle(rect.Right - depth, rect.Top, depth, rect.Height), color);
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, rect.Width, depth), color);
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y + rect.Height - depth, rect.Width, depth), color);
+            spriteBatch.Draw(pixel, new Rectangle(rect.X, rect.Y, depth, rect.Height), color);
+            spriteBatch.Draw(pixel, new Rectangle(rect.X + rect.Width - depth, rect.Y, depth, rect.Height), color);
         }
 
         public static void DrawFilledRectangle(SpriteBatch spriteBatch, Rectangle rect, Color color)

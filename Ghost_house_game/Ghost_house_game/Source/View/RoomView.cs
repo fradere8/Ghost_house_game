@@ -14,13 +14,13 @@ namespace Room
         {
             foreach (var wall in room.Walls)
             {
-                DrawingRectangles.DrawFilledRectangle(spriteBatch, wall, Color.DarkMagenta);
+                DrawingRectangles.DrawFilledRectangle(spriteBatch, wall, Color.DarkViolet);
             }
 
             foreach (var obj in room.Objects)
             {
                 DrawingRectangles.DrawFilledRectangle(spriteBatch, obj.Bounds, obj.Color);
-                DrawingRectangles.DrawNoFilledRectangle(spriteBatch, obj.Bounds, Color.Black, 2);
+                DrawingRectangles.DrawNoFilledRectangle(spriteBatch, obj.Bounds, Color.Black, 1);
             }
         }
     }
