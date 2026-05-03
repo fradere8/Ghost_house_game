@@ -4,7 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace Ghost_house_game.Source.Model
+namespace Room
 {
     public class RoomModel
     {
