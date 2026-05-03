@@ -9,16 +9,17 @@ namespace Player
 {
     public class PlayerView
     {
-        private Texture2D playerSprite;
+        private Texture2D spriteSheet;
+        private Rectangle idleSprite = new Rectangle(0, 0, 16, 16);
 
         public PlayerView(Texture2D sprite)
         {
-            playerSprite = sprite;
+            spriteSheet = sprite;
         }
 
         public void Draw(SpriteBatch spriteBatch, PlayerModel model)
         {
-            spriteBatch.Draw(playerSprite, model.Bounds, Color.White);
+            spriteBatch.Draw(spriteSheet, model.Bounds, idleSprite, Color.White);
         }
     }
 }

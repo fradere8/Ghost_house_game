@@ -6,8 +6,8 @@ namespace Player
     public class PlayerModel
     {
         public Vector2 Position { get; set; }
-        public int Width = 16;
-        public int Height = 16;
+        public int Width = 32;
+        public int Height = 32;
         public Vector2 Velocity { get; set; }
         public float Speed = 200f;
         public float Gravity = 900f;

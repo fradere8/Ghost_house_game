@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Player;
 
 namespace Ghost_house_game;
 
@@ -8,6 +9,9 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
+    private PlayerModel playerModel;
+    private PlayerView playerView;
+    private PlayerController playerController;
 
     public Game1()
     {
@@ -29,16 +33,20 @@ public class Game1 : Game
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        var spriteSheet = Content.Load<Texture2D>("Sprites/player");
 
-        // TODO: use this.Content to load your game content here
+        playerModel = new PlayerModel(new Vector2(100, 100));
+        playerView = new PlayerView(spriteSheet);
+        playerController = new PlayerController(playerModel);
     }
 
     protected override void Update(GameTime gameTime)
     {
-        if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
             Exit();
 
-        // TODO: Add your update logic here
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        playerController.Update(deltaTime);
 
         base.Update(gameTime);
     }
@@ -47,7 +55,9 @@ public class Game1 : Game
     {
         GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        // TODO: Add your drawing code here
+        spriteBatch.Begin();
+        playerView.Draw(spriteBatch, playerModel);
+        spriteBatch.End();
 
         base.Draw(gameTime);
     }
