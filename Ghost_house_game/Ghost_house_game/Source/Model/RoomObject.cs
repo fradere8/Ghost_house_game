@@ -10,14 +10,15 @@ namespace Room
     {
         public Rectangle Bounds { get; set; }
         public string Name { get; }
-        public bool IsSolid { get; set; } = false;
+        public bool IsSolid { get; set; } = true;
         public Color Color { get; } 
 
-        public RoomObject(string name, Rectangle bounds, Color color)
+        public RoomObject(string name, Rectangle bounds, Color color, bool isSolid = true)
         {
             Name = name;
             Bounds = bounds;
             Color = color;
+            IsSolid = isSolid;
         }
     }
 }

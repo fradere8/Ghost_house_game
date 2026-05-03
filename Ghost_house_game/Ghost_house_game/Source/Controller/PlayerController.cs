@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework.Input;
+using Room;
 
 namespace Player
 {
@@ -15,7 +16,7 @@ namespace Player
             playerModel = model;
         }
 
-        public void Update(float deltaTime)
+        public void Update(RoomModel roomModel, float deltaTime)
         {
             var keyboardState = Keyboard.GetState();
             var direction = 0f;
@@ -37,7 +38,12 @@ namespace Player
                 playerModel.Jump();
             }
 
-            playerModel.Update(deltaTime);
+            playerModel.Update(roomModel, deltaTime);
+            
+            if (playerModel.IsOnGround)
+            {
+                playerModel.Land();
+            }
         }
     }
 }

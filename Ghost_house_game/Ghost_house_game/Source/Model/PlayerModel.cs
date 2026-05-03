@@ -1,5 +1,7 @@
 using System;
+using System.Linq;
 using Microsoft.Xna.Framework;
+using Room;
 
 namespace Player
 {
@@ -29,7 +31,7 @@ namespace Player
             Velocity = Vector2.Zero;
         }
 
-        public void Update(float deltaTime)
+        public void Update(RoomModel room, float deltaTime)
         {
             if (!IsOnGround)
             {
@@ -38,12 +40,91 @@ namespace Player
 
             Position += Velocity * deltaTime;
             
-            var groundY = 720 - Height;
-            if (Position.Y >= groundY)
+            HandleHoizontalCollisions(room);
+            HandleVerticalCollisions(room);
+        }
+
+        private void HandleHoizontalCollisions(RoomModel room)
+        {
+            foreach (var wall in room.Walls)
             {
-                Position = new Vector2(Position.X, groundY);
-                Velocity = new Vector2(Velocity.X, 0);
-                IsOnGround = true;
+                if (Bounds.Intersects(wall))
+                {
+                    if (Velocity.X > 0)
+                    {
+                        Position = new Vector2(wall.Left - Width, Position.Y);
+                    }
+
+                    else if (Velocity.X < 0)
+                    {
+                        Position = new Vector2(wall.Right, Position.Y);
+                    }
+
+                    Velocity = new Vector2(0, Velocity.Y);
+                    break;
+                }
+            }
+
+            foreach (var obj in room.Objects.Where(x => x.IsSolid))
+            {
+                if (Bounds.Intersects(obj.Bounds))
+                {
+                    if (Velocity.X > 0)
+                    {
+                        Position = new Vector2(obj.Bounds.Left - Width, Position.Y);
+                    }
+                    else if (Velocity.X < 0)
+                    {
+                        Position = new Vector2(obj.Bounds.Right, Position.Y);
+                    }
+
+                    Velocity = new Vector2(0, Velocity.Y);
+                    break;
+                }
+            }
+        }
+
+        private void HandleVerticalCollisions(RoomModel room)
+        {
+            IsOnGround = false;
+            foreach (var wall in room.Walls.Where(w => w.Height <= 250))
+            {
+                if (Bounds.Intersects(wall))
+                {
+                    if (Velocity.Y > 0)
+                    {
+                        Position = new Vector2(Position.X, wall.Top - Height);
+                        Velocity = new Vector2(Velocity.X, 0);
+                        IsOnGround = true;
+                    }
+                    else if (Velocity.Y < 0)
+                    {
+                        Position = new Vector2(Position.X, wall.Bottom);
+                        Velocity = new Vector2(Velocity.X, 0); 
+                    }
+
+                    return;
+                }
+            }
+
+            foreach (var obj in room.Objects.Where(o => o.IsSolid))
+            {
+                if (Bounds.Intersects(obj.Bounds))
+                {
+                    if (Velocity.Y > 0)
+                    {
+                        Position = new Vector2(Position.X, obj.Bounds.Top - Height);
+                        Velocity = new Vector2(Velocity.X, 0);
+                        IsOnGround = true;
+                    }
+                    else if (Velocity.Y < 0)
+                    {
+                        Position = new Vector2(Position.X, obj.Bounds.Bottom);
+                        Velocity = new Vector2(Velocity.X, 0);
+                    }
+
+                    return;
+                }
             }
         }
 
@@ -53,12 +134,18 @@ namespace Player
             {
                 Velocity = new Vector2(Velocity.X, JumpForce);
                 IsOnGround = false;
+                IsJumping = true;
             }
         }
 
         public void Move(float direction)
         {
             Velocity = new Vector2(direction * Speed, Velocity.Y);
+        }
+
+        public void Land()
+        {
+            IsJumping = false;
         }
     }
 }
