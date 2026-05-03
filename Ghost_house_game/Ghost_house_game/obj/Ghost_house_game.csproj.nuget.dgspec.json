@@ -1,20 +1,20 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\Ольга\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {}
+    "C:\\Users\\Olga\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {}
   },
   "projects": {
-    "C:\\Users\\Ольга\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {
+    "C:\\Users\\Olga\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\Ольга\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
+        "projectUniqueName": "C:\\Users\\Olga\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
         "projectName": "Ghost_house_game",
-        "projectPath": "C:\\Users\\Ольга\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
-        "packagesPath": "C:\\Users\\Ольга\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\Ольга\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\obj\\",
+        "projectPath": "C:\\Users\\Olga\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
+        "packagesPath": "C:\\Users\\Olga\\.nuget\\packages\\",
+        "outputPath": "C:\\Users\\Olga\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
-          "C:\\Users\\Ольга\\AppData\\Roaming\\NuGet\\NuGet.Config"
+          "C:\\Users\\Olga\\AppData\\Roaming\\NuGet\\NuGet.Config"
         ],
         "originalTargetFrameworks": [
           "net9.0"
@@ -38,7 +38,7 @@
           "auditLevel": "low",
           "auditMode": "direct"
         },
-        "SdkAnalysisLevel": "9.0.300"
+        "SdkAnalysisLevel": "10.0.200"
       },
       "frameworks": {
         "net9.0": {
@@ -64,12 +64,30 @@
           ],
           "assetTargetFallback": true,
           "warn": true,
+          "downloadDependencies": [
+            {
+              "name": "Microsoft.AspNetCore.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Host.win-x64",
+              "version": "[9.0.15, 9.0.15]"
+            },
+            {
+              "name": "Microsoft.NETCore.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
+            },
+            {
+              "name": "Microsoft.WindowsDesktop.App.Ref",
+              "version": "[9.0.15, 9.0.15]"
+            }
+          ],
           "frameworkReferences": {
             "Microsoft.NETCore.App": {
               "privateAssets": "all"
             }
           },
-          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\9.0.313/PortableRuntimeIdentifierGraph.json"
+          "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.203/PortableRuntimeIdentifierGraph.json"
         }
       }
     }
