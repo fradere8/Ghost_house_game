@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Ghost_house_game")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+2610f2a59b911a8928d09d73e9eb44b68b35b902")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+9c0a99b0fb2a61889cd4996f261f71455d624013")]
 [assembly: System.Reflection.AssemblyProductAttribute("Ghost_house_game")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Ghost_house_game")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]
