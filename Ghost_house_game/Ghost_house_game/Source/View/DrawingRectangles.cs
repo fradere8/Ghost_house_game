@@ -5,11 +5,10 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Ghost_house_game.Source.View
+namespace DrawingExtensions
 {
     public class DrawingRectangles
     {
-
         public static void DrawNoFilledRectangle(SpriteBatch spriteBatch, Rectangle rect, Color color, int depth)
         {
             var pixel = new Texture2D(spriteBatch.GraphicsDevice, 1, 1);

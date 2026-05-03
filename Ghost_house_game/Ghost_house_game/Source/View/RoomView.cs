@@ -4,22 +4,23 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using DrawingExtensions;
 
 namespace Room
 {
     public class RoomView
     {
-        private static GraphicsDevice graphicsDevice;
-        private static Texture2D texture = new Texture2D(graphicsDevice, 1, 1);
-        private static Texture2D whitePixel = texture.SetData(new Color[] { Color.White });
-        
-        
         public void Draw(SpriteBatch spriteBatch, RoomModel room)
         {
-            
             foreach (var wall in room.Walls)
             {
-                spriteBatch.Draw()
+                DrawingRectangles.DrawFilledRectangle(spriteBatch, wall, Color.DarkMagenta);
+            }
+
+            foreach (var obj in room.Objects)
+            {
+                DrawingRectangles.DrawFilledRectangle(spriteBatch, obj.Bounds, obj.Color);
+                DrawingRectangles.DrawNoFilledRectangle(spriteBatch, obj.Bounds, Color.Black, 2);
             }
         }
     }
