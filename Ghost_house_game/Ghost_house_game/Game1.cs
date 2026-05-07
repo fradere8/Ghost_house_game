@@ -39,7 +39,7 @@ public class Game1 : Game
         spriteBatch = new SpriteBatch(GraphicsDevice);
         var spriteSheet = Content.Load<Texture2D>("Sprites/player");
 
-        playerModel = new PlayerModel(new Vector2(100, 420));
+        playerModel = new PlayerModel(new Vector2(100, 410));
         playerView = new PlayerView(spriteSheet);
         playerController = new PlayerController(playerModel);
 

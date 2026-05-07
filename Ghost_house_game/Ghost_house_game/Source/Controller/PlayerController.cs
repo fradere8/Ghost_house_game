@@ -42,7 +42,7 @@ namespace Player
             
             if (playerModel.IsOnGround)
             {
-                playerModel.Land();
+                playerModel.IsJumping = false;
             }
         }
     }

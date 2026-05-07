@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Microsoft.Xna.Framework;
 using Room;
@@ -10,7 +11,7 @@ namespace Player
         public Vector2 Position { get; set; }
         public int Width = 96;
         public int Height = 96;
-        public Vector2 Velocity { get; set; }
+        public Vector2 Velocity { get; private set; } = Vector2.Zero;
         public float Speed = 300f;
         public float Gravity = 1100f;
         public float JumpForce = -600f;
@@ -33,100 +34,111 @@ namespace Player
 
         public void Update(RoomModel room, float deltaTime)
         {
-            if (!IsOnGround)
-            {
-                Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity * deltaTime);
-            }
-
-            Position += Velocity * deltaTime;
-            
-            HandleHoizontalCollisions(room);
-            HandleVerticalCollisions(room);
-        }
-
-        private void HandleHoizontalCollisions(RoomModel room)
-        {
-            foreach (var wall in room.Walls)
-            {
-                if (Bounds.Intersects(wall))
-                {
-                    if (Velocity.X > 0)
-                    {
-                        Position = new Vector2(wall.Left - Width, Position.Y);
-                    }
-
-                    else if (Velocity.X < 0)
-                    {
-                        Position = new Vector2(wall.Right, Position.Y);
-                    }
-
-                    Velocity = new Vector2(0, Velocity.Y);
-                    break;
-                }
-            }
-
-            foreach (var obj in room.Objects.Where(x => x.IsSolid))
-            {
-                if (Bounds.Intersects(obj.Bounds))
-                {
-                    if (Velocity.X > 0)
-                    {
-                        Position = new Vector2(obj.Bounds.Left - Width, Position.Y);
-                    }
-                    else if (Velocity.X < 0)
-                    {
-                        Position = new Vector2(obj.Bounds.Right, Position.Y);
-                    }
-
-                    Velocity = new Vector2(0, Velocity.Y);
-                    break;
-                }
-            }
-        }
-
-        private void HandleVerticalCollisions(RoomModel room)
-        {
             IsOnGround = false;
-            foreach (var wall in room.Walls.Where(w => w.Height <= 250))
-            {
-                if (Bounds.Intersects(wall))
-                {
-                    if (Velocity.Y > 0)
-                    {
-                        Position = new Vector2(Position.X, wall.Top - Height);
-                        Velocity = new Vector2(Velocity.X, 0);
-                        IsOnGround = true;
-                    }
-                    else if (Velocity.Y < 0)
-                    {
-                        Position = new Vector2(Position.X, wall.Bottom);
-                        Velocity = new Vector2(Velocity.X, 0); 
-                    }
 
-                    return;
+            Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity * deltaTime);
+           
+            MoveHorisontal(room, deltaTime);
+            MoveVertical(room, deltaTime);
+            Velocity = new Vector2(0, Velocity.Y);
+            
+        }
+
+        private void MoveHorisontal(RoomModel room, float deltaTime)
+        {
+            Position += new Vector2(Velocity.X * deltaTime, 0);
+
+            foreach (var barrier in GetAllBarriers(room))
+            {
+                if (!Bounds.Intersects(barrier)) 
+                    continue;
+
+                if (Velocity.X > 0 && IsTouchingLeft(barrier, deltaTime))
+                {
+                    Position = new Vector2(barrier.Left - Width, Position.Y);
+                    Velocity = new Vector2(0, Velocity.Y);
                 }
-            }
 
-            foreach (var obj in room.Objects.Where(o => o.IsSolid))
-            {
-                if (Bounds.Intersects(obj.Bounds))
+                else if (Velocity.X < 0 && IsTouchingRight(barrier, deltaTime))
                 {
-                    if (Velocity.Y > 0)
-                    {
-                        Position = new Vector2(Position.X, obj.Bounds.Top - Height);
-                        Velocity = new Vector2(Velocity.X, 0);
-                        IsOnGround = true;
-                    }
-                    else if (Velocity.Y < 0)
-                    {
-                        Position = new Vector2(Position.X, obj.Bounds.Bottom);
-                        Velocity = new Vector2(Velocity.X, 0);
-                    }
-
-                    return;
+                    Position = new Vector2(barrier.Right, Position.Y);
+                    Velocity = new Vector2(0, Velocity.Y);
                 }
             }
         }
+
+        private void MoveVertical(RoomModel room, float deltaTime)
+        {
+            Position += new Vector2(0, Velocity.Y * deltaTime);
+
+            foreach (var barrier in GetAllBarriers(room))
+            {
+                if (!Bounds.Intersects(barrier)) 
+                    continue;
+
+                if (Velocity.Y > 0 && IsTouchingTop(barrier, deltaTime))
+                {
+                    Position = new Vector2(Position.X, barrier.Top - Height);
+                    Velocity = new Vector2(Velocity.X, 0);
+                    IsOnGround = true;
+                    IsJumping = false;
+                }
+
+                else if (Velocity.Y < 0 && IsTouchingBottom(barrier, deltaTime))
+                {
+                    Position = new Vector2(Position.X, barrier.Bottom);
+                    Velocity = new Vector2(Velocity.X, 0);
+                }
+            }
+        }
+
+        private List<Rectangle> GetAllBarriers(RoomModel room)
+        {
+            var barriers = new List<Rectangle>(room.Walls);
+
+            foreach (var obj in room.Objects)
+            {
+                if (obj.IsSolid)
+                {
+                    barriers.Add(obj.Bounds);
+                }
+            }
+
+            return barriers;
+        }
+
+        private bool IsTouchingLeft(Rectangle barrier, float deltaTime)
+        {
+            return Bounds.Right + Velocity.X * deltaTime > barrier.Left &&
+                   Bounds.Left < barrier.Left &&
+                   Bounds.Bottom > barrier.Top &&
+                   Bounds.Top < barrier.Bottom;
+        }
+
+        private bool IsTouchingRight(Rectangle barrier, float deltaTime)
+        {
+            return Bounds.Left + Velocity.X * deltaTime < barrier.Right &&
+                   Bounds.Right > barrier.Right &&
+                   Bounds.Bottom > barrier.Top &&
+                   Bounds.Top < barrier.Bottom;
+        }
+
+        private bool IsTouchingTop(Rectangle barrier, float deltaTime)
+        {
+            return Bounds.Bottom + Velocity.Y * deltaTime > barrier.Top &&
+                   Bounds.Top < barrier.Top &&
+                   Bounds.Right > barrier.Left &&
+                   Bounds.Left < barrier.Right;
+        }
+
+        private bool IsTouchingBottom(Rectangle barrier, float deltaTime)
+        {
+            return Bounds.Top + Velocity.Y * deltaTime < barrier.Bottom &&
+                   Bounds.Bottom > barrier.Bottom &&
+                   Bounds.Right > barrier.Left &&
+                   Bounds.Left < barrier.Right;
+        }
+            
 
         public void Jump()
         {
@@ -141,11 +153,6 @@ namespace Player
         public void Move(float direction)
         {
             Velocity = new Vector2(direction * Speed, Velocity.Y);
-        }
-
-        public void Land()
-        {
-            IsJumping = false;
         }
     }
 }
