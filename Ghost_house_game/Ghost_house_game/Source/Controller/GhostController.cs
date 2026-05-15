@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework;
 using Ghost;
 using Player;
 using Level;
+using Character;
 
 namespace Ghost_house_game.Source.Controller
 {
