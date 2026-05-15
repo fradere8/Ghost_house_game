@@ -8,22 +8,16 @@ namespace Collisions
 {
     public static class Collisions
     {
-        
-        /* public void Update(RoomModel room, float deltaTime)
-        {
-            IsOnGround = false;
-
-            Velocity = new Vector2(Velocity.X, Velocity.Y + Gravity * deltaTime);
-           
-            MoveHorisontal(room, deltaTime);
-            MoveVertical(room, deltaTime);
-            Velocity = new Vector2(0, Velocity.Y);
-            
-        } */
-
-         public static void MoveHorisontal(Vector2 position, Vector2 velocity, Rectangle bounds, List<Rectangle> barriers, float deltaTime)
+        public static void MoveHorisontal(
+            ref Vector2 position,
+            ref Vector2 velocity,
+            int width,
+            int height,
+            List<Rectangle> barriers,
+            float deltaTime)
         {
             position += new Vector2(velocity.X * deltaTime, 0);
+            var bounds = MakeNewBounds(position, width, height);
 
             foreach (var barrier in barriers)
             {
@@ -32,40 +26,62 @@ namespace Collisions
 
                 if (velocity.X > 0 && IsTouchingHorizontally(velocity, bounds, barrier, deltaTime, "left"))
                 {
-                    position = new Vector2(barrier.Left - bounds.Width, position.Y);
+                    position = new Vector2(barrier.Left - width, position.Y);
                     velocity = new Vector2(0, velocity.Y);
+                    bounds = MakeNewBounds(position, width, height);
                 }
 
                 else if (velocity.X < 0 && IsTouchingHorizontally(velocity, bounds, barrier, deltaTime, "right"))
                 {
                     position = new Vector2(barrier.Right, position.Y);
                     velocity = new Vector2(0, velocity.Y);
+                    bounds = MakeNewBounds(position, width, height);
                 }
             }
         }
 
-        public static void MoveVertical(Vector2 position, Vector2 velocity, Rectangle bounds, bool isOnGround, List<Rectangle> barriers, float deltaTime)
+        public static void MoveVertical(
+            ref Vector2 position,
+            ref Vector2 velocity,
+            int width,
+            int height,
+            ref bool isOnGround,
+            List<Rectangle> barriers,
+            float deltaTime)
         {
             position += new Vector2(0, velocity.Y * deltaTime);
+            var bounds = MakeNewBounds(position, width, height);
 
             foreach (var barrier in barriers)
             {
-                if (!bounds.Intersects(barrier)) 
+                if (!bounds.Intersects(barrier))
                     continue;
 
                 if (velocity.Y > 0 && IsTouchingVertically(velocity, bounds, barrier, deltaTime, "top"))
                 {
-                    position = new Vector2(position.X, barrier.Top - bounds.Height);
+                    position = new Vector2(position.X, barrier.Top - height);
                     velocity = new Vector2(velocity.X, 0);
                     isOnGround = true;
+                    bounds = MakeNewBounds(position, width, height);
                 }
 
                 else if (velocity.Y < 0 && IsTouchingVertically(velocity, bounds, barrier, deltaTime, "bottom"))
                 {
                     position = new Vector2(position.X, barrier.Bottom);
                     velocity = new Vector2(velocity.X, 0);
+                    bounds = MakeNewBounds(position, width, height);
                 }
             }
+        }
+
+        private static Rectangle MakeNewBounds(Vector2 position, int width, int height)
+        {
+            return new Rectangle(
+                (int)position.X,
+                (int)position.Y,
+                width,
+                height
+            );
         }
 
         private static bool IsTouchingHorizontally(Vector2 velocity, Rectangle bounds, Rectangle barrier, float deltaTime, string direction)

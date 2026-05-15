@@ -1,7 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Ghost;
 using Player;
@@ -11,13 +8,19 @@ namespace Ghost_house_game.Source.Controller
 {
     public class GhostController
     {
-        private GhostModel ghost;
-        private PlayerModel player;
+        private readonly GhostModel ghost;
+        private readonly PlayerModel player;
+
+        public GhostController(GhostModel ghost, PlayerModel player)
+        {
+            this.ghost = ghost;
+            this.player = player;
+        }
 
         public void Update(LevelModel level, float deltaTime)
         {
             ChasePlayer();
-            Character.CharacterMoveController.ApplyMovingWithCollisionsPhysics(ghost, level, deltaTime);
+            CharacterMoveController.ApplyMovingWithCollisionsPhysics(ghost, level, deltaTime);
         }
 
         private void ChasePlayer()

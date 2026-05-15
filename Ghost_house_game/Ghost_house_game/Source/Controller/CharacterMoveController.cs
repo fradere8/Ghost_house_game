@@ -14,15 +14,34 @@ namespace Character
         {
             var position = character.Position;
             var velocity = character.Velocity;
+            var isOnGround = character.IsOnGround;
+
+            isOnGround = false;
+
             velocity.Y += level.Gravity * deltaTime;
 
             var barriers = level.GetSolidBarriers();
 
-            Collisions.Collisions.MoveHorisontal(position, velocity, character.Bounds, barriers, deltaTime);
-            Collisions.Collisions.MoveVertical(position, velocity, character.Bounds,character.IsOnGround, barriers, deltaTime);
+            Collisions.Collisions.MoveHorisontal(
+                ref position,
+                ref velocity,
+                character.Width,
+                character.Height,
+                barriers,
+                deltaTime);
+
+            Collisions.Collisions.MoveVertical(
+                ref position,
+                ref velocity,
+                character.Width,
+                character.Height,
+                ref isOnGround,
+                barriers,
+                deltaTime);
 
             character.Position = position;
             character.Velocity = new Vector2(0, velocity.Y);
+            character.IsOnGround = isOnGround;
         }
     }
 }
