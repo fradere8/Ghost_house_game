@@ -4,16 +4,16 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 
-namespace Room
+namespace Level
 {
-    public class RoomObject
+    public class LevelObject
     {
         public Rectangle Bounds { get; set; }
         public string Name { get; }
         public bool IsSolid { get; set; } = true;
         public Color Color { get; } 
 
-        public RoomObject(string name, Rectangle bounds, Color color, bool isSolid = true)
+        public LevelObject(string name, Rectangle bounds, Color color, bool isSolid = true)
         {
             Name = name;
             Bounds = bounds;

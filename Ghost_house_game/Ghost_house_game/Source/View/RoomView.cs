@@ -10,7 +10,7 @@ namespace Room
 {
     public class RoomView
     {
-        public void Draw(SpriteBatch spriteBatch, RoomModel room)
+        public void Draw(SpriteBatch spriteBatch, LevelModel room)
         {
             foreach (var wall in room.Walls)
             {

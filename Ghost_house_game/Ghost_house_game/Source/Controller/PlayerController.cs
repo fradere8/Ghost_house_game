@@ -2,21 +2,17 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using Level;
 using Microsoft.Xna.Framework.Input;
-using Room;
+using Microsoft.Xna.Framework;
 
 namespace Player
 {
     public class PlayerController
     {
-        private PlayerModel playerModel;
+        private PlayerModel player;
 
-        public PlayerController(PlayerModel model)
-        {
-            playerModel = model;
-        }
-
-        public void Update(RoomModel roomModel, float deltaTime)
+        public void Update(LevelModel level, float deltaTime)
         {
             var keyboardState = Keyboard.GetState();
             var direction = 0f;
@@ -31,19 +27,26 @@ namespace Player
                 direction += 1f;
             }
 
-            playerModel.Move(direction);
+            Move(direction);
 
-            if (keyboardState.IsKeyDown(Keys.Space) || keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up))
+            if ((keyboardState.IsKeyDown(Keys.Space) || keyboardState.IsKeyDown(Keys.W) || keyboardState.IsKeyDown(Keys.Up)) && player.IsOnGround)
             {
-                playerModel.Jump();
+                Jump();
             }
 
-            playerModel.Update(roomModel, deltaTime);
-            
-            if (playerModel.IsOnGround)
-            {
-                playerModel.IsJumping = false;
-            }
+            Character.CharacterMoveController.ApplyMovingWithCollisionsPhysics(player, level, deltaTime);
+            // interactions with objects, attack
+        }
+
+        public void Move(float direction)
+        {
+            player.Velocity = new Vector2(direction * player.Speed, player.Velocity.Y);
+        }
+
+        public void Jump()
+        {
+            player.Velocity = new Vector2(player.Velocity.X, player.JumpForce);
+            player.IsOnGround = false;
         }
     }
 }

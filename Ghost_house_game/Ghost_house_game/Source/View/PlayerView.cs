@@ -10,7 +10,7 @@ namespace Player
     public class PlayerView
     {
         private Texture2D spriteSheet;
-        private Rectangle idleSprite = new Rectangle(5, 8, 22, 26);
+        private Rectangle idleSprite = new Rectangle(5, 8, 18, 19);
 
         public PlayerView(Texture2D sprite)
         {
