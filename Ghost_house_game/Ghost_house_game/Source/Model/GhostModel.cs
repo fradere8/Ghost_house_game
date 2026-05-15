@@ -12,6 +12,6 @@ namespace Ghost
         public float Speed { get; set; } = 200f;
 
         public GhostModel(Vector2 startPosition) 
-            : base(startPosition, 100, 100, 40f, 120f) {}
+            : base(startPosition, 90, 90, 40f, 120f) {}
     }
 }

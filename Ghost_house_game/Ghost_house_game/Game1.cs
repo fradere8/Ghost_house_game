@@ -4,7 +4,6 @@ using Microsoft.Xna.Framework.Input;
 using Player;
 using Level;
 using Ghost;
-using Ghost_house_game.Source.Controller;
 
 namespace Ghost_house_game;
 
@@ -12,17 +11,14 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
-
     private PlayerModel playerModel;
     private PlayerView playerView;
     private PlayerController playerController;
-
+    private LevelModel levelModel;
+    private LevelView levelView;
     private GhostModel ghostModel;
     private GhostView ghostView;
     private GhostController ghostController;
-
-    private LevelModel levelModel;
-    private LevelView levelView;
 
     public Game1()
     {
@@ -36,13 +32,13 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
+        // TODO: Add your initialization logic here
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
-
         var playerSprite = Content.Load<Texture2D>("Sprites/player");
         var ghostSprite = Content.Load<Texture2D>("Sprites/ghost");
 
