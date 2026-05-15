@@ -68,12 +68,13 @@ Source/Model/
  CharacterModel.cs
  GhostModel.cs
  LevelModel.cs
+ LevelObject.cs
  PlayerModel.cs
- RoomObject.cs
 Source/View/
  DrawingRectangles.cs
+ GhostView.cs
+ LevelView.cs
  PlayerView.cs
- RoomView.cs
 
 [metadataReferences]
 <NUGET>/microsoft.netcore.app.ref/9.0.15/ref/net9.0/

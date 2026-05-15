@@ -17,9 +17,9 @@ namespace Player
             spriteSheet = sprite;
         }
 
-        public void Draw(SpriteBatch spriteBatch, PlayerModel model)
+        public void Draw(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            spriteBatch.Draw(spriteSheet, model.Bounds, idleSprite, Color.White);
+            spriteBatch.Draw(spriteSheet, bounds, idleSprite, Color.White);
         }
     }
 }

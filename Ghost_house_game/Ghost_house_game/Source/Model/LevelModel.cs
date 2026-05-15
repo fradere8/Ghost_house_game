@@ -12,27 +12,31 @@ namespace Level
         public List<Rectangle> Walls { get; set; } = new();
         public List<LevelObject> Objects { get; set; } = new();
 
+        private const int LevelWidth = 1280;
+        private const int LevelHeight = 720;
+        private const int LevelFloorY = 570;
+
         public List<Rectangle> GetSolidBarriers() => Walls
             .Concat(Objects
                         .Where(o => o.IsSolid)
                         .Select(o => o.Bounds))
                         .ToList();
 
-        /* public LevelModel()
+        public LevelModel()
         {
-            Walls.Add(new Rectangle(0, 0, 1280, 1)); // потолок
-            Walls.Add(new Rectangle(0, 0, 1, 720)); // левая стена
-            Walls.Add(new Rectangle(1279, 0, 1, 720)); // правая стена
-            Walls.Add(new Rectangle(0, 570, 1280, 150)); // пол
+            Walls.Add(new Rectangle(0, 0, LevelWidth, 1)); // потолок
+            Walls.Add(new Rectangle(0, 0, 1, LevelHeight)); // левая стена
+            Walls.Add(new Rectangle(LevelWidth - 1, 0, 1, LevelHeight)); // правая стена
+            Walls.Add(new Rectangle(0, LevelFloorY, LevelWidth, LevelHeight - LevelFloorY)); // пол
 
-            Objects.Add(new LevelObject("Блок1", new Rectangle(1, 420, 300, 150), Color.DarkViolet)); // возвышенность 1
-            Objects.Add(new LevelObject("Блок2", new Rectangle(600, 480, 110, 90), Color.DarkViolet)); // возвышенность 2
-            Objects.Add(new LevelObject("Дверь", new Rectangle(950, 400, 100, 170), Color.DarkCyan, false)); // дверь
-            Objects.Add(new LevelObject("Платформа1", new Rectangle(375, 270, 80, 30), Color.DarkGray)); // платформа 1 
-            Objects.Add(new LevelObject("Платформа2", new Rectangle(525, 150, 80, 30), Color.DarkGray)); // платформа 2
-            Objects.Add(new LevelObject("Платформа3", new Rectangle(775, 150, 125, 30), Color.DarkGray)); // платформа 3
-            Objects.Add(new LevelObject("Сундук", new Rectangle(840, 110, 50, 40), Color.Gold, false)); // сундук
-        } */
+            Objects.Add(new LevelObject(1, 420, 300, 150, ObjectType.Block)); // возвышенность 1
+            Objects.Add(new LevelObject(600, 480, 110, 90, ObjectType.Block, false)); // возвышенность 2
+            Objects.Add(new LevelObject(950, 400, 100, 170, ObjectType.Door, false)); // дверь
+            Objects.Add(new LevelObject(375, 270, 80, 30, ObjectType.Platform)); // платформа 1
+            Objects.Add(new LevelObject(525, 150, 80, 30, ObjectType.Platform)); // платформа 2
+            Objects.Add(new LevelObject(775, 150, 125, 30, ObjectType.Platform)); // платформа 3
+            Objects.Add(new LevelObject(840, 110, 50, 40, ObjectType.Chest, false)); // сундук
+        }
 
         public void AddWall(Rectangle wall) => Walls.Add(wall);
     }
