@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "c:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {}
+    "C:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {}
   },
   "projects": {
-    "c:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {
+    "C:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "c:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
+        "projectUniqueName": "C:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
         "projectName": "Ghost_house_game",
-        "projectPath": "c:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
+        "projectPath": "C:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game.csproj",
         "packagesPath": "C:\\Users\\Olga\\.nuget\\packages\\",
-        "outputPath": "c:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\obj\\",
+        "outputPath": "C:\\Users\\Olga\\OneDrive\\Desktop\\Ghost_house_game\\Ghost_house_game\\Ghost_house_game\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\Olga\\AppData\\Roaming\\NuGet\\NuGet.Config"

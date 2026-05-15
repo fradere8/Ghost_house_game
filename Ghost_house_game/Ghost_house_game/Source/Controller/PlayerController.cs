@@ -11,6 +11,11 @@ namespace Player
     public class PlayerController
     {
         private PlayerModel player;
+        
+        public PlayerController(PlayerModel player)
+        {
+            this.player = player;
+        }
 
         public void Update(LevelModel level, float deltaTime)
         {

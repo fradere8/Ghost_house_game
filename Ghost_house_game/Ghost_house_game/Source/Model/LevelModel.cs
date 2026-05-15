@@ -30,7 +30,7 @@ namespace Level
             Walls.Add(new Rectangle(0, LevelFloorY, LevelWidth, LevelHeight - LevelFloorY)); // пол
 
             Objects.Add(new LevelObject(1, 420, 300, 150, ObjectType.Block)); // возвышенность 1
-            Objects.Add(new LevelObject(600, 480, 110, 90, ObjectType.Block, false)); // возвышенность 2
+            Objects.Add(new LevelObject(800, 480, 110, 90, ObjectType.Block, false)); // возвышенность 2
             Objects.Add(new LevelObject(950, 400, 100, 170, ObjectType.Door, false)); // дверь
             Objects.Add(new LevelObject(375, 270, 80, 30, ObjectType.Platform)); // платформа 1
             Objects.Add(new LevelObject(525, 150, 80, 30, ObjectType.Platform)); // платформа 2

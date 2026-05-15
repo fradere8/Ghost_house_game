@@ -41,7 +41,7 @@ public class Game1 : Game
 
         playerModel = new PlayerModel(new Vector2(100, 410));
         playerView = new PlayerView(spriteSheet);
-        playerController = new PlayerController();
+        playerController = new PlayerController(playerModel);
 
         levelModel = new LevelModel();
         levelView = new LevelView();
