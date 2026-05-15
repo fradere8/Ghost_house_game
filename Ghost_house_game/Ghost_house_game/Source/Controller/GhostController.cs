@@ -5,7 +5,7 @@ using Player;
 using Level;
 using Character;
 
-namespace Ghost_house_game.Source.Controller
+namespace Ghost
 {
     public class GhostController
     {

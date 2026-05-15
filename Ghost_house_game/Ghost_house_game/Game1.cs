@@ -1,84 +1,85 @@
-﻿using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Microsoft.Xna.Framework;
-using Level;
 using Player;
+using Level;
 using Ghost;
 using Ghost_house_game.Source.Controller;
 
-namespace Ghost_house_game
+namespace Ghost_house_game;
+
+public class Game1 : Game
 {
-    public class Game1 : Game
+    private GraphicsDeviceManager graphics;
+    private SpriteBatch spriteBatch;
+
+    private PlayerModel playerModel;
+    private PlayerView playerView;
+    private PlayerController playerController;
+
+    private GhostModel ghostModel;
+    private GhostView ghostView;
+    private GhostController ghostController;
+
+    private LevelModel levelModel;
+    private LevelView levelView;
+
+    public Game1()
     {
-        private GraphicsDeviceManager graphics;
-        private SpriteBatch spriteBatch;
+        graphics = new GraphicsDeviceManager(this);
+        Content.RootDirectory = "Content";
+        IsMouseVisible = true;
+        graphics.PreferredBackBufferWidth = 1280;
+        graphics.PreferredBackBufferHeight = 720;
+        graphics.ApplyChanges();
+    }
 
-        private PlayerModel playerModel;
-        private PlayerView playerView;
-        private PlayerController playerController;
+    protected override void Initialize()
+    {
+        base.Initialize();
+    }
 
-        private GhostModel ghostModel;
-        private GhostView ghostView;
-        private GhostController ghostController;
+    protected override void LoadContent()
+    {
+        spriteBatch = new SpriteBatch(GraphicsDevice);
 
-        private LevelModel levelModel;
-        
-        var spriteSheet = Content.Load<Texture2D>("Sprites/player");
+        var playerSprite = Content.Load<Texture2D>("Sprites/player");
+        var ghostSprite = Content.Load<Texture2D>("Sprites/ghost");
 
         playerModel = new PlayerModel(new Vector2(100, 400));
-        playerView = new PlayerView(spriteSheet);
+        playerView = new PlayerView(playerSprite);
+        playerController = new PlayerController(playerModel);
 
-        {
-            IsMouseVisible = true;
-            graphics.PreferredBackBufferWidth = 1280;
-            graphics.PreferredBackBufferHeight = 720;
-            graphics.ApplyChanges();
-        }
+        ghostModel = new GhostModel(new Vector2(500, 400));
+        ghostView = new GhostView(ghostSprite);
+        ghostController = new GhostController(ghostModel, playerModel);
 
-        protected override void Initialize()
-        {
-            base.Initialize();
-        }
+        levelModel = new LevelModel();
+        levelView = new LevelView();
+    }
 
-        protected override void LoadContent()
-        {
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-            var playerSprite = Content.Load<Texture2D>("Sprites/player");
-            var ghostSprite = Content.Load<Texture2D>("Sprites/ghost");
+    protected override void Update(GameTime gameTime)
+    {
+        if (Keyboard.GetState().IsKeyDown(Keys.Escape))
+            Exit();
 
-            playerModel = new PlayerModel(new Vector2(100, 474));
-            playerView = new PlayerView(playerSprite);
-            playerController = new PlayerController(playerModel);
+        var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
+        playerController.Update(levelModel, deltaTime);
+        ghostController.Update(levelModel, deltaTime);
 
-            ghostModel = new GhostModel(new Vector2(500, 474));
-            ghostView = new GhostView(ghostSprite);
-            ghostController = new GhostController(ghostModel, playerModel);
+        base.Update(gameTime);
+    }
 
-            levelModel = new LevelModel();
-            levelView = new LevelView();
-        }
+    protected override void Draw(GameTime gameTime)
+    {
+        GraphicsDevice.Clear(Color.CornflowerBlue);
 
-        protected override void Update(GameTime gameTime)
-        {
-            if (Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
-            var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            playerController.Update(levelModel, deltaTime);
-            ghostController.Update(levelModel, deltaTime);
+        spriteBatch.Begin(samplerState: SamplerState.PointClamp);
+        levelView.Draw(spriteBatch, levelModel.Walls, levelModel.Objects);
+        ghostView.Draw(spriteBatch, ghostModel.Bounds);
+        playerView.Draw(spriteBatch, playerModel.Bounds);
+        spriteBatch.End();
 
-            base.Update(gameTime);
-
-        }
-
-        protected override void Draw(GameTime gameTime)
-        {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
-            spriteBatch.Begin(samplerState: SamplerState.PointClamp);
-            levelView.Draw(spriteBatch, levelModel.Walls, levelModel.Objects);
-            ghostView.Draw(spriteBatch, ghostModel.Bounds);
-            playerView.Draw(spriteBatch, playerModel.Bounds);
-            spriteBatch.End();
-            base.Draw(gameTime);
-        }
+        base.Draw(gameTime);
     }
 }
