@@ -5,17 +5,17 @@ namespace Ghost
 {
     public class GhostView
     {
-        private readonly Texture2D _spriteSheet;
+        private readonly Texture2D spriteSheet;
         private Rectangle idleSprite = new Rectangle(7, 7, 18, 19);
 
         public GhostView(Texture2D sprite)
         {
-            _spriteSheet = sprite;
+            spriteSheet = sprite;
         }
 
         public void Draw(SpriteBatch spriteBatch, Rectangle bounds)
         {
-            spriteBatch.Draw(_spriteSheet, bounds, idleSprite, Color.White);
+            spriteBatch.Draw(spriteSheet, bounds, idleSprite, Color.White);
         }
     }
 }
