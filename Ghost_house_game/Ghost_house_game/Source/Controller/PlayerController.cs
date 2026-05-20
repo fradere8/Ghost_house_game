@@ -5,6 +5,8 @@ using System.Threading.Tasks;
 using Level;
 using Microsoft.Xna.Framework.Input;
 using Microsoft.Xna.Framework;
+using Attack;
+using Ghost;
 
 namespace Player
 {
@@ -17,9 +19,10 @@ namespace Player
             this.player = player;
         }
 
-        public void Update(LevelModel level, float deltaTime)
+        public void Update(LevelModel level, GhostModel ghost, float deltaTime)
         {
             var keyboardState = Keyboard.GetState();
+            var mouseState = Mouse.GetState();
             var direction = 0f;
 
             if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
@@ -39,8 +42,20 @@ namespace Player
                 Jump();
             }
 
+            if (keyboardState.IsKeyDown(Keys.E) || mouseState.LeftButton == ButtonState.Pressed)
+            {
+                AttackController.TryAttack(player, ghost, player.IsFacingRight, deltaTime);
+            }
+            else
+            {
+                if (player.AttackTimer > 0)
+                {
+                    player.AttackTimer -= deltaTime;
+                }
+            }
+
             Character.CharacterMoveController.ApplyMovingWithCollisionsPhysics(player, level, deltaTime);
-            // interactions with objects, attack
+            // interactions with objects
         }
 
         public void Move(float direction)

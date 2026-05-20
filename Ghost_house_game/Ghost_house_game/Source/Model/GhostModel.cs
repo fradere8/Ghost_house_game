@@ -10,9 +10,9 @@ namespace Ghost
     public class GhostModel : CharacterModel
     {
         public float Speed { get; set; } = 200f;
-/*         public bool IsFacingRight { get; set; } */
+        public bool IsFacingRight { get; set; } = true;
 
         public GhostModel(Vector2 startPosition) 
-            : base(startPosition, 90, 90, 40f, 120f) {}
+            : base(startPosition, 90, 90, 40f, 120f, 25f, 1f) {}
     }
 }

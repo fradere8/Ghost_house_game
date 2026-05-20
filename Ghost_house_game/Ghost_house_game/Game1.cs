@@ -4,6 +4,7 @@ using Microsoft.Xna.Framework.Input;
 using Player;
 using Level;
 using Ghost;
+using Health;
 
 namespace Ghost_house_game;
 
@@ -11,6 +12,7 @@ public class Game1 : Game
 {
     private GraphicsDeviceManager graphics;
     private SpriteBatch spriteBatch;
+    private Texture2D pixel;
     private PlayerModel playerModel;
     private PlayerView playerView;
     private PlayerController playerController;
@@ -19,6 +21,7 @@ public class Game1 : Game
     private GhostModel ghostModel;
     private GhostView ghostView;
     private GhostController ghostController;
+    private HealthBarView healthBarView;
 
     public Game1()
     {
@@ -32,13 +35,15 @@ public class Game1 : Game
 
     protected override void Initialize()
     {
-        // TODO: Add your initialization logic here
         base.Initialize();
     }
 
     protected override void LoadContent()
     {
         spriteBatch = new SpriteBatch(GraphicsDevice);
+        pixel = new Texture2D(GraphicsDevice, 1, 1);
+        pixel.SetData(new[] { Color.White });
+
         var playerSprite = Content.Load<Texture2D>("Sprites/player");
         var ghostSprite = Content.Load<Texture2D>("Sprites/ghost");
 
@@ -60,7 +65,7 @@ public class Game1 : Game
             Exit();
 
         var deltaTime = (float)gameTime.ElapsedGameTime.TotalSeconds;
-        playerController.Update(levelModel, deltaTime);
+        playerController.Update(levelModel, ghostModel, deltaTime);
         ghostController.Update(levelModel, deltaTime);
 
         base.Update(gameTime);
@@ -74,6 +79,8 @@ public class Game1 : Game
         levelView.Draw(spriteBatch, levelModel.Walls, levelModel.Objects);
         ghostView.Draw(spriteBatch, ghostModel.Bounds);
         playerView.Draw(spriteBatch, playerModel.Bounds);
+        healthBarView.Draw(spriteBatch, pixel, playerModel.Position, playerModel.Width, playerModel.CurrentHealth, playerModel.MaxHealth);
+        healthBarView.Draw(spriteBatch, pixel, ghostModel.Position, ghostModel.Width, ghostModel.CurrentHealth, ghostModel.MaxHealth);
         spriteBatch.End();
 
         base.Draw(gameTime);

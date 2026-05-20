@@ -1,9 +1,9 @@
 using System;
 using Microsoft.Xna.Framework;
-using Ghost;
 using Player;
 using Level;
 using Character;
+using Attack;
 
 namespace Ghost
 {
@@ -21,11 +21,8 @@ namespace Ghost
         public void Update(LevelModel level, float deltaTime)
         {
             ChasePlayer();
+            TryAttack(deltaTime);
             CharacterMoveController.ApplyMovingWithCollisionsPhysics(ghost, level, deltaTime);
-/*             if (ghost.Velocity.X > 0)
-                ghost.IsFacingRight = true;
-            else if (ghost.Velocity.X < 0)
-                ghost.IsFacingRight = false; */
         }
         
         private void ChasePlayer()
@@ -35,12 +32,24 @@ namespace Ghost
             if (Math.Abs(direction) > 5f)
             {
                 ghost.Velocity = new Vector2(Math.Sign(direction) * ghost.Speed, ghost.Velocity.Y);
+                ghost.IsFacingRight = direction > 0;
             }
             
             else
             {
                 ghost.Velocity = new Vector2(0, ghost.Velocity.Y);
             }
+        }
+
+        private void TryAttack(float deltaTime)
+        {
+            if (ghost.AttackTimer > 0)
+            {
+                ghost.AttackTimer -= deltaTime;
+                return;
+            }
+
+            AttackController.TryAttack(ghost, player, ghost.IsFacingRight, deltaTime);
         }
     }
 }
