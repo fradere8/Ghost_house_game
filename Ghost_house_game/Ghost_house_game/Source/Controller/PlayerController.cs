@@ -28,11 +28,13 @@ namespace Player
             if (keyboardState.IsKeyDown(Keys.Left) || keyboardState.IsKeyDown(Keys.A))
             {
                 direction -= 1f;
+                player.IsFacingRight = false;
             }
 
             else if (keyboardState.IsKeyDown(Keys.Right) || keyboardState.IsKeyDown(Keys.D))
             {
                 direction += 1f;
+                player.IsFacingRight = true;
             }
 
             Move(direction);

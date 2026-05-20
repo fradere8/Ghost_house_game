@@ -13,9 +13,10 @@ namespace Ghost
             spriteSheet = sprite;
         }
 
-        public void Draw(SpriteBatch spriteBatch, Rectangle bounds)
+        public void Draw(SpriteBatch spriteBatch, Rectangle bounds, bool isFacingRight)
         {
-            spriteBatch.Draw(spriteSheet, bounds, idleSprite, Color.White);
+            var effect = isFacingRight ? SpriteEffects.FlipHorizontally : SpriteEffects.None;
+            spriteBatch.Draw(spriteSheet, bounds, idleSprite, Color.White, 0f, Vector2.Zero, effect, 0f);
         }
     }
 }
