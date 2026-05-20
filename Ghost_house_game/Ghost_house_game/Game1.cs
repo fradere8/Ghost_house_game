@@ -21,8 +21,7 @@ public class Game1 : Game
     private GhostModel ghostModel;
     private GhostView ghostView;
     private GhostController ghostController;
-    private HealthBarView healthBarView;
-
+    
     public Game1()
     {
         graphics = new GraphicsDeviceManager(this);
@@ -79,8 +78,8 @@ public class Game1 : Game
         levelView.Draw(spriteBatch, levelModel.Walls, levelModel.Objects);
         ghostView.Draw(spriteBatch, ghostModel.Bounds);
         playerView.Draw(spriteBatch, playerModel.Bounds);
-        healthBarView.Draw(spriteBatch, pixel, playerModel.Position, playerModel.Width, playerModel.CurrentHealth, playerModel.MaxHealth);
-        healthBarView.Draw(spriteBatch, pixel, ghostModel.Position, ghostModel.Width, ghostModel.CurrentHealth, ghostModel.MaxHealth);
+        HealthBarView.Draw(spriteBatch, pixel, playerModel.Position, playerModel.Width, playerModel.CurrentHealth, playerModel.MaxHealth);
+        HealthBarView.Draw(spriteBatch, pixel, ghostModel.Position, ghostModel.Width, ghostModel.CurrentHealth, ghostModel.MaxHealth);
         spriteBatch.End();
 
         base.Draw(gameTime);

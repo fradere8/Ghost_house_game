@@ -7,13 +7,13 @@ using Microsoft.Xna.Framework;
 
 namespace Health
 {
-    public class HealthBarView
+    public static class HealthBarView
     {
         private const int BarWidth = 70;
         private const int BarHeight = 6;
         private const int BarOffsetY = 10;
 
-        public void Draw(
+        public static void Draw(
             SpriteBatch spriteBatch,
             Texture2D pixel,
             Vector2 charPosition,
