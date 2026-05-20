@@ -22,8 +22,12 @@ namespace Ghost
         {
             ChasePlayer();
             CharacterMoveController.ApplyMovingWithCollisionsPhysics(ghost, level, deltaTime);
+/*             if (ghost.Velocity.X > 0)
+                ghost.IsFacingRight = true;
+            else if (ghost.Velocity.X < 0)
+                ghost.IsFacingRight = false; */
         }
-
+        
         private void ChasePlayer()
         {
             var direction = player.Position.X - ghost.Position.X;

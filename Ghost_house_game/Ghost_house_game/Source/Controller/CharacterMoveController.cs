@@ -1,10 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Level;
-using Collisions;
 
 namespace Character
 {
@@ -14,30 +9,29 @@ namespace Character
         {
             var position = character.Position;
             var velocity = character.Velocity;
-            var isOnGround = character.IsOnGround;
-
-            isOnGround = false;
+            var isOnGround = false;
 
             velocity.Y += level.Gravity * deltaTime;
 
             var barriers = level.GetSolidBarriers();
 
-            Collisions.Collisions.MoveHorisontal(
-                ref position,
-                ref velocity,
-                character.Width,
-                character.Height,
-                barriers,
-                deltaTime);
+            var horizontal = Collisions.Collisions.HandleHorizontalCollisions(
+                position, velocity,
+                character.Width, character.Height,
+                barriers, deltaTime);
 
-            Collisions.Collisions.MoveVertical(
-                ref position,
-                ref velocity,
-                character.Width,
-                character.Height,
-                ref isOnGround,
-                barriers,
-                deltaTime);
+            position = horizontal.position;
+            velocity = horizontal.velocity;
+
+            var vertical = Collisions.Collisions.HandleVerticalCollisions(
+                position, velocity,
+                character.Width, character.Height,
+                isOnGround,
+                barriers, deltaTime);
+
+            position = vertical.position;
+            velocity = vertical.velocity;
+            isOnGround = vertical.isOnGround;
 
             character.Position = position;
             character.Velocity = new Vector2(0, velocity.Y);

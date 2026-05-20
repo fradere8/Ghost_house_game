@@ -1,16 +1,14 @@
 using System;
 using System.Collections.Generic;
-using System.Linq;
 using Microsoft.Xna.Framework;
-using System.Threading.Tasks;
 
 namespace Collisions
 {
     public static class Collisions
     {
-        public static void MoveHorisontal(
-            ref Vector2 position,
-            ref Vector2 velocity,
+        public static (Vector2 position, Vector2 velocity) HandleHorizontalCollisions(
+            Vector2 position,
+            Vector2 velocity,
             int width,
             int height,
             List<Rectangle> barriers,
@@ -21,7 +19,7 @@ namespace Collisions
 
             foreach (var barrier in barriers)
             {
-                if (!bounds.Intersects(barrier)) 
+                if (!bounds.Intersects(barrier))
                     continue;
 
                 if (velocity.X > 0 && IsTouchingHorizontally(velocity, bounds, barrier, deltaTime, "left"))
@@ -30,7 +28,6 @@ namespace Collisions
                     velocity = new Vector2(0, velocity.Y);
                     bounds = MakeNewBounds(position, width, height);
                 }
-
                 else if (velocity.X < 0 && IsTouchingHorizontally(velocity, bounds, barrier, deltaTime, "right"))
                 {
                     position = new Vector2(barrier.Right, position.Y);
@@ -38,14 +35,16 @@ namespace Collisions
                     bounds = MakeNewBounds(position, width, height);
                 }
             }
+
+            return (position, velocity);
         }
 
-        public static void MoveVertical(
-            ref Vector2 position,
-            ref Vector2 velocity,
+        public static (Vector2 position, Vector2 velocity, bool isOnGround) HandleVerticalCollisions(
+            Vector2 position,
+            Vector2 velocity,
             int width,
             int height,
-            ref bool isOnGround,
+            bool isOnGround,
             List<Rectangle> barriers,
             float deltaTime)
         {
@@ -64,7 +63,6 @@ namespace Collisions
                     isOnGround = true;
                     bounds = MakeNewBounds(position, width, height);
                 }
-
                 else if (velocity.Y < 0 && IsTouchingVertically(velocity, bounds, barrier, deltaTime, "bottom"))
                 {
                     position = new Vector2(position.X, barrier.Bottom);
@@ -72,6 +70,8 @@ namespace Collisions
                     bounds = MakeNewBounds(position, width, height);
                 }
             }
+
+            return (position, velocity, isOnGround);
         }
 
         private static Rectangle MakeNewBounds(Vector2 position, int width, int height)
